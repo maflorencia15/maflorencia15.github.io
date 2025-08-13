@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cuadro Maestro 360° — Documentos de Procesos (Frávega)</title>
+
+  <!-- Fuente Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --violeta-principal: #7C3AED;
+      --violeta-oscuro: #5B21B6;
+      --gris-oscuro: #333333;
+      --gris-claro: #f9f9fb;
+      --blanco: #ffffff;
+      --violeta-suave: #c6b7f5;
+      --border: #ddd;
+      --verde-duo: #58CC02;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--gris-claro);
+      color: var(--gris-oscuro);
+    }
+    header {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--violeta-principal);
+      color: var(--blanco);
+      border-bottom: 3px solid var(--verde-duo);
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--violeta-oscuro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 26px;
+      user-select: none;
+    }
+    .title { font-size: 20px; font-weight: 700; }
+    .subtitle { color: var(--violeta-suave); font-size: 13px; }
+
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
+      padding: 22px;
+    }
+    nav, main {
+      background: var(--blanco);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 8px rgba(124, 58, 237, 0.1);
+      padding: 14px;
+    }
+    nav { height: calc(100vh - 140px); overflow: auto; }
+    .search { display: flex; margin-bottom: 12px; }
+    .search input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .item {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .item:hover { background: var(--violeta-suave); }
+    .item.active { background: var(--violeta-principal); color: var(--blanco); }
+
+    .card {
+      background: #fafafa;
+      padding: 18px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.08);
+    }
+    h2 { margin: 0; color: var(--violeta-oscuro); }
+    .chip {
+      background: var(--violeta-suave);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: 5px;
+    }
+    button {
+      background: var(--verde-duo);
+      border: none;
+      color: var(--blanco);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+    button:hover { background: #46a102; }
+
+    footer {
+      padding: 12px;
+      font-size: 12px;
+      color: var(--violeta-oscuro);
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+      nav, main { height: auto; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">F</div>
+  <div>
+    <div class="title">Cuadro Maestro 360°</div>
+    <div class="subtitle">Documentos de Procesos — Estilo Frávega + Duolingo</div>
+  </div>
+</header>
+
+<div class="container">
+  <nav>
+    <div class="search">
+      <input id="filter" type="search" placeholder="Buscar documento...">
+    </div>
+    <div id="list"></div>
+  </nav>
+
+  <main id="viewer">
+    <div class="card">
+      <h2>Seleccioná un tipo de documento</h2>
+      <p>Haz clic en un formato para ver detalles y descargar plantillas.</p>
+    </div>
+    <div class="card">
+      <h3>Subir plantilla propia</h3>
+      <input type="file" id="fileUpload">
+      <ul id="uploadedFiles"></ul>
+    </div>
+  </main>
+</div>
+
+<footer>© 2025 Frávega · Proyecto visual adaptado</footer>
+
+<script>
+const ITEMS = [
+  {id:'instructivo', title:'Instructivo', what:'Documento paso a paso con acciones concretas y secuenciales para realizar una tarea específica.', purpose:'Garantizar que la tarea se haga siempre igual, reduciendo errores.', example:'Registrar una venta en POS: 1) Ingresar usuario y clave. 2) Escanear producto. 3) Confirmar precio. 4) Seleccionar medio de pago. 5) Emitir ticket y entregar al cliente.', rule:'Usalo si querés que lo hagan exactamente igual siempre.'},
+  {id:'guia', title:'Guía', what:'Documento flexible con recomendaciones y buenas prácticas.', purpose:'Orientar tareas que requieren criterio o adaptación.', example:'Atención a cliente con reclamo: escuchar, empatizar, validar ticket, ofrecer solución según políticas, escalar si es necesario.', rule:'Usala si querés criterios claros pero flexibles.'},
+  {id:'manual', title:'Manual de Procedimientos', what:'Documento integral que describe un proceso completo, políticas y responsables.', purpose:'Estandarizar procesos complejos.', example:'Devoluciones y cambios: políticas, pasos, validaciones y responsables.', rule:'Usalo si es un proceso completo y formal.'},
+  {id:'checklist', title:'Checklist (Lista de Verificación)', what:'Lista para marcar tareas cumplidas.', purpose:'Evitar olvidos y asegurar pasos clave.', example:'Apertura de sucursal: encender luces, verificar caja chica, prender POS, revisar exhibición y stock.', rule:'Usalo si es algo que no se debe olvidar.'},
+  {id:'diagrama', title:'Diagrama de Flujo', what:'Representación visual del proceso con símbolos estándar.', purpose:'Comprender rápido el flujo y decisiones.', example:'Garantía: cliente → validar garantía → ¿vigente? → sí: servicio técnico / no: informar condiciones.', rule:'Usalo si querés mostrarlo rápido.'},
+  {id:'politica', title:'Política', what:'Declaración de principios o reglas.', purpose:'Definir criterios y límites.', example:'Atención al cliente: atender dentro de los primeros 2 minutos de ingreso a la sucursal.', rule:'Usala si querés definir las reglas del juego.'},
+  {id:'sop', title:'SOP (Procedimiento Operativo Estandarizado)', what:'Documento detallado con contexto, alcance y recursos.', purpose:'Asegurar calidad y consistencia operativa.', example:'Instalación de TV en domicilio: preparación, verificación de accesorios, coordinación con logística, firma de conformidad.', rule:'Usalo cuando la tarea involucra múltiples pasos y roles.'},
+  {id:'plantilla', title:'Plantilla / Formulario', what:'Documento con campos prediseñados para recopilar datos uniformes.', purpose:'Estandarizar la captura de información.', example:'Ingreso de reclamos: fecha, N° de ticket, nombre cliente, producto, descripción, acción tomada.', rule:'Usalo si necesitás datos consistentes siempre.'},
+  {id:'mapa', title:'Mapa de Proceso', what:'Visual de alto nivel con etapas clave, responsables y conexiones.', purpose:'Ver panorama general de un proceso.', example:'Proceso de ventas en sucursal: atracción → asesoramiento → cierre → entrega → postventa.', rule:'Usalo si querés visión global sin detalle.'},
+  {id:'raci', title:'Matriz RACI', what:'Tabla que define roles y responsabilidades (R/A/C/I).', purpose:'Clarificar quién hace qué.', example:'Reposición de stock: Responsable=Encargado de piso, Accountable=Gerente de tienda, Consulted=Logística, Informed=Administración.', rule:'Usalo si querés evitar confusiones de responsabilidades.'},
+  {id:'faq', title:'FAQ', what:'Preguntas y respuestas frecuentes sobre un proceso.', purpose:'Reducir consultas repetitivas y dar autogestión.', example:'Cambios y devoluciones: ¿Cuánto tengo para cambiar un producto? Respuesta: 30 días con ticket y embalaje original.', rule:'Usalo si querés resolver dudas rápidas.'},
+  {id:'video', title:'Video Tutorial', what:'Recurso audiovisual paso a paso.', purpose:'Aprendizaje visual y práctico.', example:'Video de uso del POS: ingreso, venta, cancelación y devoluciones.', rule:'Usalo si querés que aprendan viendo.'},
+  {id:'infografia', title:'Infografía', what:'Documento visual sintetizado con elementos gráficos.', purpose:'Hacer la información atractiva y memorable.', example:'Pasos para venta con financiación: requisitos, documentación y plazos.', rule:'Usala si querés recordación rápida.'},
+  {id:'card', title:'Work Instruction Card', what:'Tarjeta o ficha de referencia rápida.', purpose:'Tener instrucciones clave siempre a mano.', example:'Códigos rápidos de productos más vendidos y atajos del POS.', rule:'Usala si querés consulta inmediata en el puesto de trabajo.'},
+  {id:'actores', title:'Mapa de Actores', what:'Visual de los participantes y sus interacciones en un proceso.', purpose:'Identificar relaciones y puntos de contacto.', example:'Entrega de electrodomésticos: vendedor, encargado, logística, cliente.', rule:'Usalo si querés entender quién interactúa con quién.'},
+  {id:'contingencia', title:'Procedimiento de Contingencia', what:'Pasos para actuar si algo falla.', purpose:'Mantener la operación en situaciones imprevistas.', example:'Facturación manual si el POS está caído.', rule:'Usalo si querés asegurar continuidad.'},
+  {id:'narrativa', title:'Flow Narrative', what:'Descripción lineal y detallada del proceso.', purpose:'Facilitar comprensión antes de diagramar.', example:'Recorrido de un cliente desde que entra a la tienda hasta la entrega del producto.', rule:'Usalo si querés explicar antes de mostrar.'},
+  {id:'storyboard', title:'Storyboard de Servicio', what:'Secuencia visual de interacciones cliente–personal.', purpose:'Entrenar experiencia de cliente.', example:'Viñetas con saludo, asesoramiento, cierre y despedida.', rule:'Usalo si querés entrenar interacciones humanas.'},
+  {id:'riesgos', title:'Matriz de Riesgos', what:'Identificación de riesgos, probabilidad, impacto y acciones.', purpose:'Prevenir problemas.', example:'Entrega a domicilio: daños, ausencias, demoras; acciones preventivas y mitigación.', rule:'Usala si querés anticipar y mitigar riesgos.'},
+  {id:'visual', title:'Procedimiento Visual', what:'Procedimiento con fotos o ilustraciones paso a paso.', purpose:'Hacer más clara la ejecución.', example:'Colocar TV en exhibición: fotos del anclaje y altura recomendada.', rule:'Usalo si querés que se entienda de un vistazo.'},
+  {id:'script', title:'Script / Guion', what:'Texto para interacciones verbales o telefónicas.', purpose:'Unificar mensajes y ofertas.', example:'Guion telefónico para ofrecer financiación en caja.', rule:'Usalo si querés consistencia en la comunicación.'}
+];
+
+const listEl = document.getElementById('list');
+const viewer = document.getElementById('viewer');
+const filter = document.getElementById('filter');
+
+function renderList(items) {
+  listEl.innerHTML = '';
+  items.forEach(it => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.id = 'li-' + it.id;
+    div.innerHTML = `<strong>${it.title}</strong>`;
+    div.onclick = () => select(it.id);
+    listEl.appendChild(div);
+  });
+}
+function select(id) {
+  const it = ITEMS.find(i => i.id === id);
+  document.querySelectorAll('.item').forEach(n => n.classList.remove('active'));
+  document.getElementById('li-' + id).classList.add('active');
+  viewer.innerHTML = `
+    <div class="card">
+      <h2>${it.title}</h2>
+      <p>${it.what}</p>
+      <div><span class="chip">Uso: ${it.purpose}</span></div>
+      <div><strong>Ejemplo:</strong> ${it.example}</div>
+      <p><strong>Regla:</strong> ${it.rule}</p>
+      <button onclick="downloadTemplate('${it.id}')">Descargar plantilla</button>
+      <button onclick="copyToClipboard('${it.id}')">Copiar al portapapeles</button>
+    </div>
+    <div class="card">
+      <h3>Subir plantilla propia</h3>
+      <input type="file" id="fileUpload">
+      <ul id="uploadedFiles"></ul>
+    </div>
+  `;
+  initUpload();
+}
+function downloadTemplate(id) {
+  const it = ITEMS.find(x => x.id === id);
+  const blob = new Blob([`Plantilla - ${it.title}\n\nQué es: ${it.what}\n\nPara qué sirve: ${it.purpose}\n\nEjemplo: ${it.example}\n\nRegla práctica: ${it.rule}`], {type: 'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `${it.id}_plantilla.txt`; a.click();
+  URL.revokeObjectURL(url);
+}
+function copyToClipboard(id) {
+  const it = ITEMS.find(x => x.id === id);
+  const text = `Título: ${it.title}\nQué es: ${it.what}\nPara qué sirve: ${it.purpose}\nEjemplo: ${it.example}\nRegla práctica: ${it.rule}`;
+  navigator.clipboard.writeText(text).then(() => alert('Copiado al portapapeles'));
+}
+function initUpload() {
+  const upload = document.getElementById('fileUpload');
+  const list = document.getElementById('uploadedFiles');
+  upload.onchange = () => {
+    const file = upload.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${url}" download="${file.name}">${file.name}</a>`;
+      list.appendChild(li);
+    }
+  };
+}
+filter.oninput = () => {
+  const q = filter.value.toLowerCase();
+  renderList(ITEMS.filter(i => (i.title + i.what + i.purpose).toLowerCase().includes(q)));
+};
+renderList(ITEMS);
+initUpload();
+</script>
+</body>
+</html>
