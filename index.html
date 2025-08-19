@@ -148,8 +148,7 @@
     </div>
     <div class="card">
       <h3>Subir plantilla propia</h3>
-      <input type="file" id="fileUpload">
-      <ul id="uploadedFiles"></ul>
+      <button onclick="window.open('https://drive.google.com/drive/folders/1ggCriPm4qVk4fWi327i-qLmM2cp5p-hy?usp=drive_link','_blank')">Seleccionar archivo</button>
     </div>
   </main>
 </div>
@@ -177,7 +176,14 @@ function renderList(items) {
   listEl.innerHTML = '';
   items.forEach(it => {
     const div = document.createElement('div');
-    function select(id) {
+    div.className = 'item';
+    div.id = 'li-' + it.id;
+    div.innerHTML = `<strong>${it.title}</strong>`;
+    div.onclick = () => select(it.id);
+    listEl.appendChild(div);
+  });
+}
+function select(id) {
   const it = ITEMS.find(i => i.id === id);
   document.querySelectorAll('.item').forEach(n => n.classList.remove('active'));
   document.getElementById('li-' + id).classList.add('active');
@@ -188,46 +194,20 @@ function renderList(items) {
       <div><span class="chip">Uso: ${it.purpose}</span></div>
       <div><strong>Ejemplo:</strong> ${it.example}</div>
       <p><strong>Regla:</strong> ${it.rule}</p>
-      <button onclick="downloadTemplate('${it.id}')">Descargar plantilla</button>
+      <button onclick="window.open('https://drive.google.com/drive/folders/1ggCriPm4qVk4fWi327i-qLmM2cp5p-hy?usp=drive_link','_blank')">Descargar plantilla</button>
       <button onclick="copyToClipboard('${it.id}')">Copiar al portapapeles</button>
     </div>
     <div class="card">
       <h3>Subir plantilla propia</h3>
-      <input type="file" id="fileUpload">
-      <ul id="uploadedFiles"></ul>
+      <button onclick="window.open('https://drive.google.com/drive/folders/1ggCriPm4qVk4fWi327i-qLmM2cp5p-hy?usp=drive_link','_blank')">Seleccionar archivo</button>
     </div>
   `;
-  initUpload();
-}
-  const blob = new Blob([`Plantilla - ${it.title}\n\nQué es: ${it.what}\n\nPara qué sirve: ${it.purpose}\n\nEjemplo: ${it.example}\n\nRegla práctica: ${it.rule}`], {type: 'text/plain'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = `${it.id}_plantilla.txt`; a.click();
-  URL.revokeObjectURL(url);
-}
-function copyToClipboard(id) {
-  const it = ITEMS.find(x => x.id === id);
-  const text = `Título: ${it.title}\nQué es: ${it.what}\nPara qué sirve: ${it.purpose}\nEjemplo: ${it.example}\nRegla práctica: ${it.rule}`;
-  navigator.clipboard.writeText(text).then(() => alert('Copiado al portapapeles'));
-}
-function initUpload() {
-  const upload = document.getElementById('fileUpload');
-  const list = document.getElementById('uploadedFiles');
-  upload.onchange = () => {
-    const file = upload.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      const li = document.createElement('li');
-      li.innerHTML = `<a href="${url}" download="${file.name}">${file.name}</a>`;
-      list.appendChild(li);
-    }
-  };
 }
 filter.oninput = () => {
   const q = filter.value.toLowerCase();
   renderList(ITEMS.filter(i => (i.title + i.what + i.purpose).toLowerCase().includes(q)));
 };
 renderList(ITEMS);
-initUpload();
 </script>
 </body>
 </html>
