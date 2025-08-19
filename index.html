@@ -98,7 +98,7 @@
       font-weight: 600;
       margin-right: 5px;
       margin-bottom: 15px;
-display: block;
+      display: block;
     }
     button {
       background: var(--verde-duo);
@@ -164,21 +164,9 @@ const ITEMS = [
   {id:'checklist', title:'Checklist (Lista de Verificación)', what:'Lista para marcar tareas cumplidas.', purpose:'Evitar olvidos y asegurar pasos clave.', example:'Apertura de sucursal: encender luces, verificar caja chica, prender POS, revisar exhibición y stock.', rule:'Usalo si es algo que no se debe olvidar.'},
   {id:'diagrama', title:'Diagrama de Flujo', what:'Representación visual del proceso con símbolos estándar.', purpose:'Comprender rápido el flujo y decisiones.', example:'Garantía: cliente → validar garantía → ¿vigente? → sí: servicio técnico / no: informar condiciones.', rule:'Usalo si querés mostrarlo rápido.'},
   {id:'politica', title:'Política', what:'Declaración de principios o reglas.', purpose:'Definir criterios y límites.', example:'Atención al cliente: atender dentro de los primeros 2 minutos de ingreso a la sucursal.', rule:'Usala si querés definir las reglas del juego.'},
-  {id:'sop', title:'SOP (Procedimiento Operativo Estandarizado)', what:'Documento detallado con contexto, alcance y recursos.', purpose:'Asegurar calidad y consistencia operativa.', example:'Instalación de TV en domicilio: preparación, verificación de accesorios, coordinación con logística, firma de conformidad.', rule:'Usalo cuando la tarea involucra múltiples pasos y roles.'},
   {id:'plantilla', title:'Plantilla / Formulario', what:'Documento con campos prediseñados para recopilar datos uniformes.', purpose:'Estandarizar la captura de información.', example:'Ingreso de reclamos: fecha, N° de ticket, nombre cliente, producto, descripción, acción tomada.', rule:'Usalo si necesitás datos consistentes siempre.'},
-  {id:'mapa', title:'Mapa de Proceso', what:'Visual de alto nivel con etapas clave, responsables y conexiones.', purpose:'Ver panorama general de un proceso.', example:'Proceso de ventas en sucursal: atracción → asesoramiento → cierre → entrega → postventa.', rule:'Usalo si querés visión global sin detalle.'},
-  {id:'raci', title:'Matriz RACI', what:'Tabla que define roles y responsabilidades (R/A/C/I).', purpose:'Clarificar quién hace qué.', example:'Reposición de stock: Responsable=Encargado de piso, Accountable=Gerente de tienda, Consulted=Logística, Informed=Administración.', rule:'Usalo si querés evitar confusiones de responsabilidades.'},
   {id:'faq', title:'FAQ', what:'Preguntas y respuestas frecuentes sobre un proceso.', purpose:'Reducir consultas repetitivas y dar autogestión.', example:'Cambios y devoluciones: ¿Cuánto tengo para cambiar un producto? Respuesta: 30 días con ticket y embalaje original.', rule:'Usalo si querés resolver dudas rápidas.'},
-  {id:'video', title:'Video Tutorial', what:'Recurso audiovisual paso a paso.', purpose:'Aprendizaje visual y práctico.', example:'Video de uso del POS: ingreso, venta, cancelación y devoluciones.', rule:'Usalo si querés que aprendan viendo.'},
-  {id:'infografia', title:'Infografía', what:'Documento visual sintetizado con elementos gráficos.', purpose:'Hacer la información atractiva y memorable.', example:'Pasos para venta con financiación: requisitos, documentación y plazos.', rule:'Usala si querés recordación rápida.'},
-  {id:'card', title:'Work Instruction Card', what:'Tarjeta o ficha de referencia rápida.', purpose:'Tener instrucciones clave siempre a mano.', example:'Códigos rápidos de productos más vendidos y atajos del POS.', rule:'Usala si querés consulta inmediata en el puesto de trabajo.'},
-  {id:'actores', title:'Mapa de Actores', what:'Visual de los participantes y sus interacciones en un proceso.', purpose:'Identificar relaciones y puntos de contacto.', example:'Entrega de electrodomésticos: vendedor, encargado, logística, cliente.', rule:'Usalo si querés entender quién interactúa con quién.'},
-  {id:'contingencia', title:'Procedimiento de Contingencia', what:'Pasos para actuar si algo falla.', purpose:'Mantener la operación en situaciones imprevistas.', example:'Facturación manual si el POS está caído.', rule:'Usalo si querés asegurar continuidad.'},
-  {id:'narrativa', title:'Flow Narrative', what:'Descripción lineal y detallada del proceso.', purpose:'Facilitar comprensión antes de diagramar.', example:'Recorrido de un cliente desde que entra a la tienda hasta la entrega del producto.', rule:'Usalo si querés explicar antes de mostrar.'},
-  {id:'storyboard', title:'Storyboard de Servicio', what:'Secuencia visual de interacciones cliente–personal.', purpose:'Entrenar experiencia de cliente.', example:'Viñetas con saludo, asesoramiento, cierre y despedida.', rule:'Usalo si querés entrenar interacciones humanas.'},
-  {id:'riesgos', title:'Matriz de Riesgos', what:'Identificación de riesgos, probabilidad, impacto y acciones.', purpose:'Prevenir problemas.', example:'Entrega a domicilio: daños, ausencias, demoras; acciones preventivas y mitigación.', rule:'Usala si querés anticipar y mitigar riesgos.'},
-  {id:'visual', title:'Procedimiento Visual', what:'Procedimiento con fotos o ilustraciones paso a paso.', purpose:'Hacer más clara la ejecución.', example:'Colocar TV en exhibición: fotos del anclaje y altura recomendada.', rule:'Usalo si querés que se entienda de un vistazo.'},
-  {id:'script', title:'Script / Guion', what:'Texto para interacciones verbales o telefónicas.', purpose:'Unificar mensajes y ofertas.', example:'Guion telefónico para ofrecer financiación en caja.', rule:'Usalo si querés consistencia en la comunicación.'}
+  {id:'infografia', title:'Infografía', what:'Documento visual sintetizado con elementos gráficos.', purpose:'Hacer la información atractiva y memorable.', example:'Pasos para venta con financiación: requisitos, documentación y plazos.', rule:'Usala si querés recordación rápida.'}
 ];
 
 const listEl = document.getElementById('list');
