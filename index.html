@@ -177,14 +177,7 @@ function renderList(items) {
   listEl.innerHTML = '';
   items.forEach(it => {
     const div = document.createElement('div');
-    div.className = 'item';
-    div.id = 'li-' + it.id;
-    div.innerHTML = `<strong>${it.title}</strong>`;
-    div.onclick = () => select(it.id);
-    listEl.appendChild(div);
-  });
-}
-function select(id) {
+    function select(id) {
   const it = ITEMS.find(i => i.id === id);
   document.querySelectorAll('.item').forEach(n => n.classList.remove('active'));
   document.getElementById('li-' + id).classList.add('active');
@@ -206,8 +199,6 @@ function select(id) {
   `;
   initUpload();
 }
-function downloadTemplate(id) {
-  const it = ITEMS.find(x => x.id === id);
   const blob = new Blob([`Plantilla - ${it.title}\n\nQué es: ${it.what}\n\nPara qué sirve: ${it.purpose}\n\nEjemplo: ${it.example}\n\nRegla práctica: ${it.rule}`], {type: 'text/plain'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = `${it.id}_plantilla.txt`; a.click();
